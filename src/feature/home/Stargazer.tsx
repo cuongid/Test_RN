@@ -3,14 +3,19 @@ import { Themes } from 'assets/themes';
 import { StyledList, StyledText, StyledTouchable } from 'components/base';
 import AlertMessage from 'components/base/AlertMessage';
 import StyledOverlayLoading from 'components/base/StyledOverlayLoading';
-import StyledHeader from 'components/common/StyledHeader';
 import React, { useEffect, useState } from 'react';
 import { View } from 'react-native';
 import { ScaledSheet } from 'react-native-size-matters';
 import ItemRepository from './components/ItemRepository';
 
-const Stargazer = ({ route }: any) => {
-    const { params } = route;
+interface StargazerProps {
+    repositoryName: string;
+    name: string;
+    totalStargazer: number;
+}
+
+const Stargazer = (props: StargazerProps) => {
+    const { repositoryName, name, totalStargazer } = props;
     const [pageIndex, setPageIndex] = useState(1);
     const [listStargazer, setListStargazer] = useState<any>([]);
     const [loading, setLoading] = useState(false);
@@ -23,9 +28,8 @@ const Stargazer = ({ route }: any) => {
     const getDataStargazer = async () => {
         try {
             setLoading(true);
-            const stargazer: any = await getStargazer(params?.name, params?.repositoryName, pageIndex, 2);
+            const stargazer: any = await getStargazer(name, repositoryName, pageIndex, 30);
             if (stargazer) {
-                console.log('stargazer', stargazer);
                 setListStargazer([...listStargazer, ...stargazer]);
             }
         } catch (err) {
@@ -39,10 +43,9 @@ const Stargazer = ({ route }: any) => {
     };
     return (
         <View style={styles.container}>
-            <StyledHeader title={params?.name} />
             <StyledOverlayLoading visible={loading} />
             <StyledList data={listStargazer} renderItem={renderListStargazer} />
-            {params?.totalStargazer > listStargazer?.length && (
+            {totalStargazer > listStargazer?.length ? (
                 <StyledTouchable
                     customStyle={[
                         styles.loadMore,
@@ -55,6 +58,8 @@ const Stargazer = ({ route }: any) => {
                         customStyle={styles.textLoadMore}
                     />
                 </StyledTouchable>
+            ) : (
+                <View />
             )}
         </View>
     );

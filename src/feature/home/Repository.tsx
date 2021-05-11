@@ -5,8 +5,6 @@ import { Themes } from 'assets/themes';
 import { StyledIcon, StyledList, StyledText, StyledTouchable } from 'components/base';
 import AlertMessage from 'components/base/AlertMessage';
 import StyledOverlayLoading from 'components/base/StyledOverlayLoading';
-import { HOME_ROUTE } from 'navigation/config/routes';
-import { navigate } from 'navigation/NavigationService';
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { View } from 'react-native';
@@ -18,7 +16,7 @@ import ItemRepository from './components/ItemRepository';
 let isSearch = false;
 const Repository = () => {
     const { t } = useTranslation();
-    const [data, setData] = useState({ name: '', pageIndex: 1, pageSize: 2 });
+    const [data, setData] = useState({ name: '', pageIndex: 1, pageSize: 30 });
     const [userInfo, setUserInfo] = useState<any>({});
     const [listRepository, setListRepository] = useState<any>([]);
     const [loading, setLoading] = useState(false);
@@ -29,16 +27,12 @@ const Repository = () => {
             const user = await getUser(data?.name);
             if (user) {
                 setUserInfo(user);
-                console.log({ user });
                 getDataRepository();
             }
         } catch (err) {
             AlertMessage(err);
         }
     };
-    useEffect(() => {
-        console.log({ listRepository });
-    }, [listRepository]);
     const getDataRepository = async () => {
         setListRepository([]);
         try {
@@ -62,17 +56,10 @@ const Repository = () => {
     }, [data?.pageIndex]);
 
     const renderItem = ({ item }: any) => (
-        <ItemRepository data={item} avatar={userInfo?.avatar_url} onPress={() => onStargazer(item)} />
+        <ItemRepository data={item} avatar={userInfo?.avatar_url} gitName={data?.name} />
     );
     const onLoadMore = () => {
         setData({ ...data, pageIndex: data?.pageIndex + 1 });
-    };
-    const onStargazer = (item: any) => {
-        navigate(HOME_ROUTE.STARGAZER, {
-            name: data?.name,
-            repositoryName: item?.name,
-            totalStargazer: item?.stargazers_count,
-        });
     };
 
     return (
@@ -142,7 +129,6 @@ const styles = ScaledSheet.create({
         height: '45@vs',
         borderWidth: 1,
         borderRadius: '20@vs',
-        borderColor: Themes.COLORS.secondary,
         marginLeft: '20@s',
     },
     search: {

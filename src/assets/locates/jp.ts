@@ -97,9 +97,10 @@ export default {
         totalRepository: 'Public repository: {{repositoryPublic}}',
         stargazers: 'Load stargazers',
         loadMore: 'Load more',
-        search: 'Enter your name',
+        search: 'Enter your github name',
         loaded: 'Loaded: {{total}}',
         loadMoreStargazer: 'Load more stargazer',
+        hide: 'Hide',
     },
     stargazer: {},
 };
