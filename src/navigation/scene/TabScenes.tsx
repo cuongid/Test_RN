@@ -1,8 +1,8 @@
 import { BottomTabBarProps, createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Images from 'assets/images';
 import AccountView from 'feature/account/AccountView';
-import Repository from 'feature/home/Repository';
 import NotificationScreen from 'feature/notification/NotificationScreen';
+import Repository from 'feature/repository/Repository';
 import SettingView from 'feature/setting/SettingScreen';
 import StyledTabBar from 'navigation/components/StyledTabBar';
 import { TAB_NAVIGATION_ROOT } from 'navigation/config/routes';

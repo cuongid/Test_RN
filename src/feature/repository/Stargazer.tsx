@@ -45,7 +45,7 @@ const Stargazer = (props: StargazerProps) => {
         <View style={styles.container}>
             <StyledOverlayLoading visible={loading} />
             <StyledList data={listStargazer} renderItem={renderListStargazer} />
-            {totalStargazer > listStargazer?.length ? (
+            {totalStargazer > listStargazer?.length && listStargazer?.length ? (
                 <StyledTouchable
                     customStyle={[
                         styles.loadMore,

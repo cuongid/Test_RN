@@ -1,5 +1,5 @@
 import { createStackNavigator } from '@react-navigation/stack';
-import Stargazer from 'feature/home/Stargazer';
+import Stargazer from 'feature/repository/Stargazer';
 import React from 'react';
 import { Host } from 'react-native-portalize';
 import navigationConfigs from '../config/options';
